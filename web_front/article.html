@@ -205,6 +205,33 @@
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
 
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/template-web.js"></script>
+    <script id="details" type="text/html">
+        杰克 发布于 {{data.date}}&nbsp;&nbsp;&nbsp;分类: {{data.type}}&nbsp;&nbsp;&nbsp;阅读:
+        ({{data.read}})&nbsp;&nbsp;&nbsp;评论: ({{data.comment}})
+    </script>
+    <script>
+        $(function () {
+            // 获取id
+            let id = window.location.search.split('=')[1];
+            // 发送请求报文,根据id获取数据
+            $.ajax({
+                url: 'http://localhost:8000/admin/search',
+                type: 'get',
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    console.log(response);
+                    $('.left_con .article_title').html(response.data.title);
+                    $('.article_info').html(template('details', response));
+                    $('.article_con').html(response.data.content);
+                }
+            })
+        })
+    </script>
+
 </body>
 
 </html>
